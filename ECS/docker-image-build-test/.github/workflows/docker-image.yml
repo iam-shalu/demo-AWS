@@ -1,0 +1,27 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Jab bhi main branch mein code push hoga, workflow trigger hoga
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # GitHub runner ka environment
+
+    steps:
+      # Code ko checkout karna
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Docker image build karna
+      - name: Build Docker Image
+        run: docker build -t my-docker-image:latest .
+
+      # Agar aap image ko Docker Hub ya AWS ECR pe push karna chahte hain:
+      # - name: Log in to Docker Hub
+      #   run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push my-docker-image:latest
+
